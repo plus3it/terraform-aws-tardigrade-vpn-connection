@@ -5,37 +5,37 @@ variable "create_vpn_connection" {
 
 variable "name" {
   description = "Name tag to associate to all resources that support tags"
-  type        = "string"
-  default     = ""
+  type        = string
+  default     = null
 }
 
 variable "vpc_id" {
   description = "VPC ID to which the VPN Connection will be attached"
-  type        = "string"
-  default     = ""
+  type        = string
+  default     = null
 }
 
 variable "amazon_side_asn" {
   description = "ASN for the Amazon side of the VPN gateway"
-  type        = "string"
+  type        = string
   default     = "64512"
 }
 
 variable "cgw_bgp_asn" {
   description = "BGP ASN of the customer gateway"
-  type        = "string"
-  default     = ""
+  type        = string
+  default     = null
 }
 
 variable "cgw_ip_addresses" {
   description = "List of IP addresses of the customer gateways"
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
 variable "static_routes_only" {
   description = "Boolean used to determine whether the VPN connection uses static routes exclusively. Static routes must be used for devices that don't support BGP"
-  type        = "string"
+  type        = string
   default     = "false"
 }
 
@@ -57,6 +57,7 @@ variable "propagating_route_table_count" {
 
 variable "tags" {
   description = "A map of tags to add to any VPN resource that supports tags"
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
+
