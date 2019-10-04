@@ -1,5 +1,6 @@
 variable "create_vpn_connection" {
   description = "Controls whether to create the VPN resources"
+  type        = bool
   default     = true
 }
 
@@ -35,7 +36,7 @@ variable "cgw_ip_addresses" {
 
 variable "static_routes_only" {
   description = "Boolean used to determine whether the VPN connection uses static routes exclusively. Static routes must be used for devices that don't support BGP"
-  type        = string
+  type        = bool
   default     = "false"
 }
 
@@ -60,4 +61,3 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
-
