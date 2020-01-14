@@ -12,7 +12,7 @@ Terraform module to create a VPN Connection
 | create\_vpn\_connection | Controls whether to create the VPN resources | bool | `"true"` | no |
 | destination\_cidr\_blocks | List of CIDR blocks to route through the VPN Connection | list | `<list>` | no |
 | name | Name tag to associate to all resources that support tags | string | `"null"` | no |
-| propagating\_route\_table\_count | Number of route tables in the list of progagating_route_table_ids | string | `"0"` | no |
+| propagating\_route\_table\_count | Number of route tables in the list of progagating\_route\_table\_ids | string | `"0"` | no |
 | propagating\_route\_table\_ids | List of Route Table IDs to propagate routes into, from the VPN Gateway | list | `<list>` | no |
 | static\_routes\_only | Boolean used to determine whether the VPN connection uses static routes exclusively. Static routes must be used for devices that don't support BGP | bool | `"false"` | no |
 | tags | A map of tags to add to any VPN resource that supports tags | map(string) | `<map>` | no |
