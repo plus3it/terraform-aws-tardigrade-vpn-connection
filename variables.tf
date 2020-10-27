@@ -1,9 +1,3 @@
-variable "create_vpn_connection" {
-  description = "Controls whether to create the VPN resources"
-  type        = bool
-  default     = true
-}
-
 variable "name" {
   description = "Name tag to associate to all resources that support tags"
   type        = string
