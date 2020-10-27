@@ -1,6 +1,6 @@
 output "vpn_gateway_id" {
   description = "ID of the VPN Gateway"
-  value       = aws_vpn_gateway.this.*.id
+  value       = aws_vpn_gateway.this.id
 }
 
 output "customer_gateway_ids" {
