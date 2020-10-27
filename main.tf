@@ -1,6 +1,3 @@
-provider "aws" {
-}
-
 locals {
   vgw_name = var.name == null ? "VGW" : "VGW_${var.name}"
   cgw_name = var.name == null ? "CGW" : "CGW_${var.name}"
