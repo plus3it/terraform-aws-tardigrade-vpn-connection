@@ -31,7 +31,7 @@ resource "aws_customer_gateway" "this" {
 
 resource "aws_vpn_connection" "this" {
 
-  vpn_gateway_id      = aws_vpn_gateway.this[0].id
+  vpn_gateway_id      = aws_vpn_gateway.this.id
   customer_gateway_id = aws_customer_gateway.this[count.index].id
   type                = "ipsec.1"
   static_routes_only  = var.static_routes_only
@@ -51,6 +51,6 @@ resource "aws_vpn_connection_route" "this" {
 
 resource "aws_vpn_gateway_route_propagation" "this" {
 
-  vpn_gateway_id = aws_vpn_gateway.this[0].id
+  vpn_gateway_id = aws_vpn_gateway.this.id
   route_table_id = var.propagating_route_table_ids[count.index]
 }
