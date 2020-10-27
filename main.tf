@@ -17,6 +17,7 @@ resource "aws_vpn_gateway" "this" {
 }
 
 resource "aws_customer_gateway" "this" {
+  count = length(var.cgw_ip_addresses)
 
   bgp_asn    = var.cgw_bgp_asn
   ip_address = var.cgw_ip_addresses[count.index]
@@ -30,6 +31,7 @@ resource "aws_customer_gateway" "this" {
 }
 
 resource "aws_vpn_connection" "this" {
+  count = length(var.cgw_ip_addresses)
 
   vpn_gateway_id      = aws_vpn_gateway.this.id
   customer_gateway_id = aws_customer_gateway.this[count.index].id
@@ -44,12 +46,14 @@ resource "aws_vpn_connection" "this" {
 }
 
 resource "aws_vpn_connection_route" "this" {
+  count = length(var.destination_cidr_blocks)
 
   destination_cidr_block = var.destination_cidr_blocks[count.index]
   vpn_connection_id      = aws_vpn_connection.this[0].id
 }
 
 resource "aws_vpn_gateway_route_propagation" "this" {
+  count = var.propagating_route_table_count
 
   vpn_gateway_id = aws_vpn_gateway.this.id
   route_table_id = var.propagating_route_table_ids[count.index]
