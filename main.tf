@@ -1,6 +1,3 @@
-provider "aws" {
-}
-
 locals {
   vgw_name = var.name == null ? "VGW" : "VGW_${var.name}"
   cgw_name = var.name == null ? "CGW" : "CGW_${var.name}"
@@ -8,7 +5,6 @@ locals {
 }
 
 resource "aws_vpn_gateway" "this" {
-  count = var.create_vpn_connection ? 1 : 0
 
   vpc_id          = var.vpc_id
   amazon_side_asn = var.amazon_side_asn
@@ -21,7 +17,7 @@ resource "aws_vpn_gateway" "this" {
 }
 
 resource "aws_customer_gateway" "this" {
-  count = var.create_vpn_connection ? length(var.cgw_ip_addresses) : 0
+  count = length(var.cgw_ip_addresses)
 
   bgp_asn    = var.cgw_bgp_asn
   ip_address = var.cgw_ip_addresses[count.index]
@@ -35,9 +31,9 @@ resource "aws_customer_gateway" "this" {
 }
 
 resource "aws_vpn_connection" "this" {
-  count = var.create_vpn_connection ? length(var.cgw_ip_addresses) : 0
+  count = length(var.cgw_ip_addresses)
 
-  vpn_gateway_id      = aws_vpn_gateway.this[0].id
+  vpn_gateway_id      = aws_vpn_gateway.this.id
   customer_gateway_id = aws_customer_gateway.this[count.index].id
   type                = "ipsec.1"
   static_routes_only  = var.static_routes_only
@@ -50,15 +46,15 @@ resource "aws_vpn_connection" "this" {
 }
 
 resource "aws_vpn_connection_route" "this" {
-  count = var.create_vpn_connection ? length(var.destination_cidr_blocks) : 0
+  count = length(var.destination_cidr_blocks)
 
   destination_cidr_block = var.destination_cidr_blocks[count.index]
   vpn_connection_id      = aws_vpn_connection.this[0].id
 }
 
 resource "aws_vpn_gateway_route_propagation" "this" {
-  count = var.create_vpn_connection ? var.propagating_route_table_count : 0
+  count = var.propagating_route_table_count
 
-  vpn_gateway_id = aws_vpn_gateway.this[0].id
+  vpn_gateway_id = aws_vpn_gateway.this.id
   route_table_id = var.propagating_route_table_ids[count.index]
 }
