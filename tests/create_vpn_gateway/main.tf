@@ -26,6 +26,6 @@ module "example" {
     aws = aws
   }
 
-  name                  = "tardigrade-vpn-connection-${random_string.this.result}"
-  vpc_id                = module.vpc.vpc_id
+  name   = "tardigrade-vpn-connection-${random_string.this.result}"
+  vpc_id = module.vpc.vpc_id
 }

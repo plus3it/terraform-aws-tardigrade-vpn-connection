@@ -26,8 +26,8 @@ module "example" {
     aws = aws
   }
 
-  name                  = "tardigrade-vpc-connection-${random_string.this.result}"
-  vpc_id                = module.vpc.vpc_id
-  cgw_ip_addresses      = ["19.1.1.1", "19.1.1.2"]
-  cgw_bgp_asn           = "64511"
+  name             = "tardigrade-vpc-connection-${random_string.this.result}"
+  vpc_id           = module.vpc.vpc_id
+  cgw_ip_addresses = ["19.1.1.1", "19.1.1.2"]
+  cgw_bgp_asn      = "64511"
 }
