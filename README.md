@@ -23,7 +23,6 @@ Terraform module to create a VPN Connection
 | amazon\_side\_asn | ASN for the Amazon side of the VPN gateway | `string` | `"64512"` | no |
 | cgw\_bgp\_asn | BGP ASN of the customer gateway | `string` | `null` | no |
 | cgw\_ip\_addresses | List of IP addresses of the customer gateways | `list(string)` | `[]` | no |
-| create\_vpn\_connection | Controls whether to create the VPN resources | `bool` | `true` | no |
 | destination\_cidr\_blocks | List of CIDR blocks to route through the VPN Connection | `list` | `[]` | no |
 | name | Name tag to associate to all resources that support tags | `string` | `null` | no |
 | propagating\_route\_table\_count | Number of route tables in the list of progagating\_route\_table\_ids | `string` | `"0"` | no |
