@@ -5,11 +5,6 @@ updates:
   schedule:
     interval: daily
   open-pull-requests-limit: 10
-- package-ecosystem: pip
-  directory: "/"
-  schedule:
-    interval: daily
-  open-pull-requests-limit: 10
 - package-ecosystem: terraform
   directory: "/tests/create_vpn_gateway"
   schedule:
@@ -17,16 +12,6 @@ updates:
   open-pull-requests-limit: 10
 - package-ecosystem: terraform
   directory: "/tests/create_customer_gateway"
-  schedule:
-    interval: daily
-  open-pull-requests-limit: 10
-- package-ecosystem: terraform
-  directory: "/tests/no_create"
-  schedule:
-    interval: daily
-  open-pull-requests-limit: 10
-- package-ecosystem: gomod
-  directory: "/tests"
   schedule:
     interval: daily
   open-pull-requests-limit: 10
