@@ -1,57 +1,97 @@
-variable "name" {
-  description = "Name tag to associate to all resources that support tags"
-  type        = string
-  default     = null
-}
+variable "vpn_connection" {
+  type = object({
+    name               = string
+    static_routes_only = optional(bool, false)
+    tags               = optional(map(string))
+    type               = optional(string, "ipsec.1")
 
-variable "vpc_id" {
-  description = "VPC ID to which the VPN Connection will be attached"
-  type        = string
-  default     = null
-}
+    transit_gateway_id = optional(string)
+    vpn_gateway_id     = optional(string)
 
-variable "amazon_side_asn" {
-  description = "ASN for the Amazon side of the VPN gateway"
-  type        = string
-  default     = "64512"
-}
+    enable_acceleration                     = optional(bool)
+    outside_ip_address_type                 = optional(string)
+    transport_transit_gateway_attachment_id = optional(string)
+    tunnel_inside_ip_version                = optional(string)
 
-variable "cgw_bgp_asn" {
-  description = "BGP ASN of the customer gateway"
-  type        = string
-  default     = null
-}
+    local_ipv4_network_cidr = optional(string)
+    local_ipv6_network_cidr = optional(string)
 
-variable "cgw_ip_addresses" {
-  description = "List of IP addresses of the customer gateways"
-  type        = list(string)
-  default     = []
-}
+    remote_ipv4_network_cidr = optional(string)
+    remote_ipv6_network_cidr = optional(string)
 
-variable "static_routes_only" {
-  description = "Boolean used to determine whether the VPN connection uses static routes exclusively. Static routes must be used for devices that don't support BGP"
-  type        = bool
-  default     = "false"
-}
+    tunnel1_inside_cidr                     = optional(string)
+    tunnel1_inside_ipv6_cidr                = optional(string)
+    tunnel1_preshared_key                   = optional(string)
+    tunnel1_dpd_timeout_action              = optional(string)
+    tunnel1_dpd_timeout_seconds             = optional(number)
+    tunnel1_enable_tunnel_lifecycle_control = optional(bool)
+    tunnel1_ike_versions                    = optional(list(string))
+    tunnel1_rekey_fuzz_percentage           = optional(number)
+    tunnel1_rekey_margin_time_seconds       = optional(number)
+    tunnel1_replay_window_size              = optional(number)
+    tunnel1_startup_action                  = optional(string)
 
-variable "destination_cidr_blocks" {
-  description = "List of CIDR blocks to route through the VPN Connection"
-  default     = []
-}
+    tunnel1_phase1_dh_group_numbers      = optional(list(number))
+    tunnel1_phase1_encryption_algorithms = optional(list(string))
+    tunnel1_phase1_integrity_algorithms  = optional(list(string))
+    tunnel1_phase1_lifetime_seconds      = optional(number)
 
-variable "propagating_route_table_ids" {
-  description = "List of Route Table IDs to propagate routes into, from the VPN Gateway"
-  default     = []
-}
+    tunnel1_phase2_dh_group_numbers      = optional(list(number))
+    tunnel1_phase2_encryption_algorithms = optional(list(string))
+    tunnel1_phase2_integrity_algorithms  = optional(list(string))
+    tunnel1_phase2_lifetime_seconds      = optional(number)
 
-# Hack to work around count not computed errors, pending tf 0.12 for a solution based on length of propagating_route_table_ids
-variable "propagating_route_table_count" {
-  description = "Number of route tables in the list of progagating_route_table_ids"
-  default     = "0"
-}
+    tunnel1_log_options = optional(object({
+      cloudwatch_log_options = object({
+        log_group_arn     = string
+        log_enabled       = optional(bool, false)
+        log_output_format = optional(string, "json")
+      })
+    }))
 
-variable "tags" {
-  description = "A map of tags to add to any VPN resource that supports tags"
-  type        = map(string)
-  default     = {}
+    tunnel2_inside_cidr                     = optional(string)
+    tunnel2_inside_ipv6_cidr                = optional(string)
+    tunnel2_preshared_key                   = optional(string)
+    tunnel2_dpd_timeout_action              = optional(string)
+    tunnel2_dpd_timeout_seconds             = optional(number)
+    tunnel2_enable_tunnel_lifecycle_control = optional(bool)
+    tunnel2_ike_versions                    = optional(list(string))
+    tunnel2_rekey_fuzz_percentage           = optional(number)
+    tunnel2_rekey_margin_time_seconds       = optional(number)
+    tunnel2_replay_window_size              = optional(number)
+    tunnel2_startup_action                  = optional(string)
+
+    tunnel2_phase1_dh_group_numbers      = optional(list(number))
+    tunnel2_phase1_encryption_algorithms = optional(list(string))
+    tunnel2_phase1_integrity_algorithms  = optional(list(string))
+    tunnel2_phase1_lifetime_seconds      = optional(number)
+
+    tunnel2_phase2_dh_group_numbers      = optional(list(number))
+    tunnel2_phase2_encryption_algorithms = optional(list(string))
+    tunnel2_phase2_integrity_algorithms  = optional(list(string))
+    tunnel2_phase2_lifetime_seconds      = optional(number)
+
+    tunnel2_log_options = optional(object({
+      cloudwatch_log_options = object({
+        log_group_arn     = string
+        log_enabled       = optional(bool, false)
+        log_output_format = optional(string, "json")
+      })
+    }))
+
+    customer_gateway = object({
+      name            = string
+      bgp_asn         = string
+      certificate_arn = optional(string)
+      device_name     = optional(string)
+      ip_address      = optional(string)
+      tags            = optional(map(string))
+      type            = optional(string, "ipsec.1")
+    })
+
+    routes = optional(list(object({
+      name                   = string
+      destination_cidr_block = string
+    })), [])
+  })
 }
