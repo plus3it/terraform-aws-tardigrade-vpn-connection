@@ -1,8 +1,10 @@
-resource "random_string" "this" {
-  length  = 6
-  upper   = false
-  special = false
-  number  = false
+module "vpn_gateway" {
+  source = "../../modules/vpn-gateway"
+
+  vpn_gateway = {
+    name   = "tardigrade-vpn-connection-${random_string.this.result}"
+    vpc_id = module.vpc.vpc_id
+  }
 }
 
 module "vpc" {
@@ -12,9 +14,9 @@ module "vpc" {
   cidr = "10.0.0.0/16"
 }
 
-module "example" {
-  source = "../../"
-
-  name   = "tardigrade-vpn-connection-${random_string.this.result}"
-  vpc_id = module.vpc.vpc_id
+resource "random_string" "this" {
+  length  = 6
+  upper   = false
+  special = false
+  numeric = false
 }
