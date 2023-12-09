@@ -2,7 +2,7 @@ variable "vpn_connection" {
   type = object({
     name               = string
     static_routes_only = optional(bool, false)
-    tags               = optional(map(string))
+    tags               = optional(map(string), {})
     type               = optional(string, "ipsec.1")
 
     transit_gateway_id = optional(string)
@@ -42,12 +42,20 @@ variable "vpn_connection" {
     tunnel1_phase2_lifetime_seconds      = optional(number)
 
     tunnel1_log_options = optional(object({
-      cloudwatch_log_options = object({
-        log_group_arn     = string
-        log_enabled       = optional(bool, false)
+      cloudwatch_log_options = optional(object({
+        log_group_arn     = optional(string)
+        log_enabled       = optional(bool, true)
         log_output_format = optional(string, "json")
-      })
-    }))
+      }), {})
+
+      cloudwatch_log_group = optional(object({
+        kms_key_id        = optional(string)
+        log_group_class   = optional(string, "INFREQUENT_ACCESS")
+        retention_in_days = optional(number, 30)
+        skip_destroy      = optional(bool, false)
+        tags              = optional(map(string), {})
+      }), {})
+    }), {})
 
     tunnel2_inside_cidr                     = optional(string)
     tunnel2_inside_ipv6_cidr                = optional(string)
@@ -72,12 +80,20 @@ variable "vpn_connection" {
     tunnel2_phase2_lifetime_seconds      = optional(number)
 
     tunnel2_log_options = optional(object({
-      cloudwatch_log_options = object({
-        log_group_arn     = string
-        log_enabled       = optional(bool, false)
+      cloudwatch_log_options = optional(object({
+        log_group_arn     = optional(string)
+        log_enabled       = optional(bool, true)
         log_output_format = optional(string, "json")
-      })
-    }))
+      }), {})
+
+      cloudwatch_log_group = optional(object({
+        kms_key_id        = optional(string)
+        log_group_class   = optional(string, "INFREQUENT_ACCESS")
+        retention_in_days = optional(number, 30)
+        skip_destroy      = optional(bool, false)
+        tags              = optional(map(string), {})
+      }), {})
+    }), {})
 
     customer_gateway = object({
       name            = string

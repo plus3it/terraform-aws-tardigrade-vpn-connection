@@ -65,9 +65,9 @@ resource "aws_vpn_connection" "this" {
     for_each = var.vpn_connection.tunnel1_log_options == null ? [] : [var.vpn_connection.tunnel1_log_options]
     content {
       cloudwatch_log_options {
-        log_group_arn     = tunnel1_log_options.cloudwatch_log_options.log_group_arn
-        log_enabled       = tunnel1_log_options.cloudwatch_log_options.log_enabled
-        log_output_format = tunnel1_log_options.cloudwatch_log_options.log_output_format
+        log_group_arn     = tunnel1_log_options.value.cloudwatch_log_group != null ? aws_cloudwatch_log_group.tunnel1[0].arn : tunnel1_log_options.value.cloudwatch_log_options.log_group_arn
+        log_enabled       = tunnel1_log_options.value.cloudwatch_log_options.log_enabled
+        log_output_format = tunnel1_log_options.value.cloudwatch_log_options.log_output_format
       }
     }
   }
@@ -76,9 +76,9 @@ resource "aws_vpn_connection" "this" {
     for_each = var.vpn_connection.tunnel2_log_options == null ? [] : [var.vpn_connection.tunnel2_log_options]
     content {
       cloudwatch_log_options {
-        log_group_arn     = tunnel2_log_options.cloudwatch_log_options.log_group_arn
-        log_enabled       = tunnel2_log_options.cloudwatch_log_options.log_enabled
-        log_output_format = tunnel2_log_options.cloudwatch_log_options.log_output_format
+        log_group_arn     = tunnel2_log_options.value.cloudwatch_log_group != null ? aws_cloudwatch_log_group.tunnel2[0].arn : tunnel2_log_options.value.cloudwatch_log_options.log_group_arn
+        log_enabled       = tunnel2_log_options.value.cloudwatch_log_options.log_enabled
+        log_output_format = tunnel2_log_options.value.cloudwatch_log_options.log_output_format
       }
     }
   }
@@ -111,4 +111,36 @@ resource "aws_vpn_connection_route" "this" {
 
   destination_cidr_block = each.value.destination_cidr_block
   vpn_connection_id      = aws_vpn_connection.this.id
+}
+
+resource "aws_cloudwatch_log_group" "tunnel1" {
+  count = var.vpn_connection.tunnel1_log_options != null ? (var.vpn_connection.tunnel1_log_options.cloudwatch_log_group != null ? 1 : 0) : 0
+
+  name              = "/aws/vendedlogs/${var.vpn_connection.name}-tunnel1"
+  log_group_class   = var.vpn_connection.tunnel1_log_options.cloudwatch_log_group.log_group_class
+  skip_destroy      = var.vpn_connection.tunnel1_log_options.cloudwatch_log_group.skip_destroy
+  retention_in_days = var.vpn_connection.tunnel1_log_options.cloudwatch_log_group.retention_in_days
+  kms_key_id        = var.vpn_connection.tunnel1_log_options.cloudwatch_log_group.kms_key_id
+  tags = merge(
+    var.vpn_connection.tunnel1_log_options.cloudwatch_log_group.tags,
+    {
+      "Name" = "/aws/vendedlogs/${var.vpn_connection.name}-tunnel1"
+    }
+  )
+}
+
+resource "aws_cloudwatch_log_group" "tunnel2" {
+  count = var.vpn_connection.tunnel2_log_options != null ? (var.vpn_connection.tunnel2_log_options.cloudwatch_log_group != null ? 1 : 0) : 0
+
+  name              = "/aws/vendedlogs/${var.vpn_connection.name}-tunnel2"
+  log_group_class   = var.vpn_connection.tunnel2_log_options.cloudwatch_log_group.log_group_class
+  skip_destroy      = var.vpn_connection.tunnel2_log_options.cloudwatch_log_group.skip_destroy
+  retention_in_days = var.vpn_connection.tunnel2_log_options.cloudwatch_log_group.retention_in_days
+  kms_key_id        = var.vpn_connection.tunnel2_log_options.cloudwatch_log_group.kms_key_id
+  tags = merge(
+    var.vpn_connection.tunnel2_log_options.cloudwatch_log_group.tags,
+    {
+      "Name" = "/aws/vendedlogs/${var.vpn_connection.name}-tunnel2"
+    }
+  )
 }

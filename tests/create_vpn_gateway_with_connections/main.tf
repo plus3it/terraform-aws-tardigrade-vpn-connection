@@ -2,25 +2,25 @@ module "vpn_gateway" {
   source = "../../modules/vpn-gateway"
 
   vpn_gateway = {
-    name             = "tardigrade-vpn-gateway-${local.id}"
-    vpc_id           = module.vpc.vpc_id
+    name   = "tardigrade-vpn-gateway-${local.id}"
+    vpc_id = module.vpc.vpc_id
   }
 
   vpn_connections = [
     {
       name = "tardigrade-vpn-connection-1-${local.id}"
       customer_gateway = {
-        name            = "tardigrade-customer-gateway-1-${local.id}"
-        bgp_asn         = "64511"
-        ip_address      = "19.1.1.1"
+        name       = "tardigrade-customer-gateway-1-${local.id}"
+        bgp_asn    = "64511"
+        ip_address = "19.1.1.1"
       }
     },
     {
       name = "tardigrade-vpn-connection-2-${local.id}"
       customer_gateway = {
-        name            = "tardigrade-customer-gateway-2-${local.id}"
-        bgp_asn         = "64511"
-        ip_address      = "19.1.1.2"
+        name       = "tardigrade-customer-gateway-2-${local.id}"
+        bgp_asn    = "64511"
+        ip_address = "19.1.1.2"
       }
     }
   ]

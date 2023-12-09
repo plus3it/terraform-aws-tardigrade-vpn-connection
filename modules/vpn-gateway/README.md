@@ -22,7 +22,7 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_vpn_gateway"></a> [vpn\_gateway](#input\_vpn\_gateway) | n/a | <pre>object({<br>    name              = string<br>    amazon_side_asn   = optional(string)<br>    availability_zone = optional(string)<br>    tags              = optional(map(string))<br>    vpc_id            = optional(string)<br><br>    route_propagations = list(object({<br>      name           = string<br>      route_table_id = string<br>    }))<br>  })</pre> | n/a | yes |
+| <a name="input_vpn_gateway"></a> [vpn\_gateway](#input\_vpn\_gateway) | n/a | <pre>object({<br>    name              = string<br>    amazon_side_asn   = optional(string)<br>    availability_zone = optional(string)<br>    tags              = optional(map(string))<br>    vpc_id            = optional(string)<br><br>    route_propagations = optional(list(object({<br>      name           = string<br>      route_table_id = string<br>    })), [])<br>  })</pre> | n/a | yes |
 | <a name="input_vpn_connections"></a> [vpn\_connections](#input\_vpn\_connections) | List of VPN Connections to create and associate to this VPN Gateway. See top-level module for options | `any` | `[]` | no |
 
 ## Outputs
