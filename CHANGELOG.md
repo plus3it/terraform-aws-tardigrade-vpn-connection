@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### 3.0.0
+
+**Released**: 2023.12.09
+
+**Commit Delta**: [Change from 1.0.2 release](https://github.com/plus3it/terraform-aws-tardigrade-vpn-connection/compare/1.0.2...3.0.0)
+
+**Summary**:
+
+*   Completely refactors module to support all VPN Connection options and target
+    types, including VPN Gateway and Transit Gateway
+
 ### 1.0.2
 
 **Released**: 2019.10.28
