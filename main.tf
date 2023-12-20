@@ -117,6 +117,20 @@ resource "aws_vpn_connection_route" "this" {
   vpn_connection_id      = aws_vpn_connection.this.id
 }
 
+resource "aws_ec2_transit_gateway_route_table_association" "this" {
+  count = var.vpn_connection.transit_gateway_route_table_association != null ? 1 : 0
+
+  transit_gateway_attachment_id  = aws_vpn_connection.this.transit_gateway_attachment_id
+  transit_gateway_route_table_id = var.vpn_connection.transit_gateway_route_table_association.transit_gateway_route_table_id
+}
+
+resource "aws_ec2_transit_gateway_route_table_propagation" "this" {
+  for_each = { for route_table in var.vpn_connection.transit_gateway_route_table_propagations : route_table.name => route_table }
+
+  transit_gateway_attachment_id  = aws_vpn_connection.this.transit_gateway_attachment_id
+  transit_gateway_route_table_id = each.value.transit_gateway_route_table_id
+}
+
 resource "aws_cloudwatch_log_group" "tunnel1" {
   count = var.vpn_connection.tunnel1_log_options != null ? (var.vpn_connection.tunnel1_log_options.cloudwatch_log_group != null ? 1 : 0) : 0
 
@@ -148,3 +162,4 @@ resource "aws_cloudwatch_log_group" "tunnel2" {
     }
   )
 }
+

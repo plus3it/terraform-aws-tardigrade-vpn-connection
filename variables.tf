@@ -109,5 +109,14 @@ variable "vpn_connection" {
       name                   = string
       destination_cidr_block = string
     })), [])
+
+    transit_gateway_route_table_association = optional(object({
+      transit_gateway_route_table_id = string
+    }))
+
+    transit_gateway_route_table_propagations = optional(list(object({
+      name                           = string
+      transit_gateway_route_table_id = string
+    })), [])
   })
 }
