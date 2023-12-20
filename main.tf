@@ -104,6 +104,10 @@ resource "aws_customer_gateway" "this" {
       "Name" = var.vpn_connection.customer_gateway.name
     },
   )
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_vpn_connection_route" "this" {
