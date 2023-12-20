@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### [3.0.1](https://github.com/plus3it/terraform-aws-tardigrade-vpn-connection/releases/tag/3.0.1)
+
+**Released**: 2023.12.20
+
+**Summary**:
+
+*   Creates customer gateway before destroying old one to fix issues when changes
+    require recreation
+*   Requires minimum terraform aws provider 5.31.0 to support `log_group_class`
+    attribute on cloudwatch log group
+
 ### 3.0.0
 
 **Released**: 2023.12.09
