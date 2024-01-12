@@ -89,6 +89,16 @@ resource "aws_vpn_connection" "this" {
       "Name" = var.vpn_connection.name
     },
   )
+
+  lifecycle {
+    ignore_changes = [
+      # vgw_telemetry is a wholly-calculated attribute with no input arguments.
+      # It may be modified outside of the terraform lifecycle by changes to the
+      # tunnel. Ignore changes to avoid unnecessary diffs that are not caused by
+      # changes to inputs.
+      vgw_telemetry,
+    ]
+  }
 }
 
 resource "aws_customer_gateway" "this" {
