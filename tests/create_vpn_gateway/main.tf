@@ -8,7 +8,7 @@ module "vpn_gateway" {
 }
 
 module "vpc" {
-  source = "github.com/terraform-aws-modules/terraform-aws-vpc?ref=v5.5.0"
+  source = "github.com/terraform-aws-modules/terraform-aws-vpc?ref=v5.5.1"
 
   name = "tardigrade-vpn-connection-${random_string.this.result}"
   cidr = "10.0.0.0/16"
