@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### [3.1.2](https://github.com/plus3it/terraform-aws-tardigrade-vpn-connection/releases/tag/3.1.2)
+
+**Released**: 2024.02.16
+
+**Summary**:
+
+*   Reverts change using ignore_changes on the vgw_telemetry attribute. Since that
+    attribute is "computed", Terraform already ignores changes on it. The original
+    problem with the diff must be related to a different configuration specific
+    to the user config.
+
 ### [3.1.1](https://github.com/plus3it/terraform-aws-tardigrade-vpn-connection/releases/tag/3.1.1)
 
 **Released**: 2024.01.12
